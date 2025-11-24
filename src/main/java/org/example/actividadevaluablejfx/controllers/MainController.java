@@ -12,6 +12,7 @@ import org.example.actividadevaluablejfx.model.Usuario;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -35,17 +36,16 @@ public class MainController implements Initializable {
     @javafx.fxml.FXML
     private CheckBox checkAdmin;
 
-    private List<Usuario> usuarios;
+    private List<Usuario> usuarios = new ArrayList<>();
 
     private ObservableList<String> plataformas= FXCollections.observableArrayList();
-
-    public MainController(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
+    @javafx.fxml.FXML
+    private Label txtEror;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         cCorreo.setCellValueFactory((row)->{
             return new SimpleStringProperty(row.getValue().getCorreo().toString());
         });
@@ -70,11 +70,22 @@ public class MainController implements Initializable {
     public void añadirUsuario(ActionEvent actionEvent) throws IOException {
 
         Usuario usuario = new Usuario();
-        usuario.setCorreo(txtCorreo.getText());
-        usuario.setPlataforma(comboPlataforma.getValue().toString());
+        if(txtCorreo.getText().isEmpty()){
+            txtEror.setText("Faltan Datos");
+        }
+        else usuario.setCorreo(txtCorreo.getText());
+
+        if(comboPlataforma.getValue().toString().isEmpty()){
+            txtEror.setText("Faltan Datos");
+        }
+        else usuario.setPlataforma(comboPlataforma.getValue().toString());
         usuario.setIsAdmin(checkAdmin.isSelected());
         usuarios.add(usuario);
-        tabla.getItems().addAll(usuarios);
         refreshTable();
+        txtCorreo.clear();
+        comboPlataforma.getSelectionModel().clearSelection();
+        checkAdmin.setSelected(false);
+
+
     }
 }

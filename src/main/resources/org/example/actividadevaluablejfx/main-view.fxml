@@ -24,6 +24,7 @@
                         <Label text="Plataforma:" />
                         <ComboBox fx:id="comboPlataforma" prefWidth="150.0" promptText="Selecciona una plataforma" />
                         <CheckBox fx:id="checkAdmin" mnemonicParsing="false" text="Es administrador" />
+                        <Label fx:id="txtEror" />
                         <Button fx:id="btnAñadir" mnemonicParsing="false" onAction="#añadirUsuario" text="Añadir" />
                      </children>
                   </VBox>
